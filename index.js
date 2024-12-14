@@ -2,9 +2,9 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const userRouter = require('./routes/user');
-const bodyParser = require('body-parser');
-const { urlencoded } = require("body-parser");
+const userRouter = require("./routes/user");
+const jobRouter = require("./routes/jobs");
+
 const app = express();
 
 // Configure dotenv for environment variables
@@ -16,12 +16,12 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// creating route:
+// Routes
 app.use("/api/user", userRouter);
+app.use("/api/job", jobRouter);
 
 // Serve HTML file
 app.get("/", (req, res) => {
